@@ -2,11 +2,19 @@ name: "CodeQL"
 
 # yamllint disable-line rule:truthy
 on:
+  push:
+    branches:
+      - dev
+      - rc
+      - master
+  pull_request:
+    branches:
+      - dev
   schedule:
     - cron: "30 18 * * 4"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
