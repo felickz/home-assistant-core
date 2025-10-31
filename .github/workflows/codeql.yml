@@ -46,7 +46,14 @@ jobs:
           build-mode: ${{ matrix.build-mode }}
           config: |
             paths-ignore:
-              - 'tests/**'
+              - 'tests/**'  # test code not production
+              - 'homeassistant/components/demo/**'  # demo/example code only
+              - 'script/scaffold/templates/**'  # code generation templates
+              - 'script/hassfest/**'  # development validation tools
+              - 'script/split_tests.py'  # test organization utility
+              - 'script/translations/**'  # translation management tools
+              - 'homeassistant/scripts/benchmark/**'  # performance testing scripts
+              - 'pylint/plugins/**'  # custom linting plugins
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@4e94bd11f71e507f7f87df81788dff88d1dacbfb # v4.31.0
