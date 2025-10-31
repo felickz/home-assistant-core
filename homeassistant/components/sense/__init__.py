@@ -41,16 +41,13 @@ class SenseData:
 
 async def async_setup_entry(hass: HomeAssistant, entry: SenseConfigEntry) -> bool:
     """Set up Sense from a config entry."""
-
     entry_data = entry.data
     timeout = entry_data[CONF_TIMEOUT]
-
     access_token = entry_data.get("access_token", "")
     user_id = entry_data.get("user_id", "")
     device_id = entry_data.get("device_id", "")
     refresh_token = entry_data.get("refresh_token", "")
     monitor_id = entry_data.get("monitor_id", "")
-
     client_session = async_get_clientsession(hass)
 
     # Creating the AsyncSenseable object loads
@@ -91,7 +88,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: SenseConfigEntry) -> boo
 
     trends_coordinator = SenseTrendCoordinator(hass, entry, gateway)
     realtime_coordinator = SenseRealtimeCoordinator(hass, entry, gateway)
-
     # This can take longer than 60s and we already know
     # sense is online since get_discovered_device_data was
     # successful so we do it later.
@@ -105,7 +101,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: SenseConfigEntry) -> boo
         realtime_coordinator.async_request_refresh(),
         "sense.realtime-coordinator-refresh",
     )
-
     entry.runtime_data = SenseData(
         data=gateway,
         trends=trends_coordinator,
